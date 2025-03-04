@@ -1,0 +1,49 @@
+#!/bin/bash
+# This is a script to create a standalone executable from a Python script using PyInstaller
+# Usage: pyinstall script.py
+# Check if argument is provided
+if [ $# -eq 0 ]; then
+    echo "❌ Error: Please provide a Python file as argument"
+    echo "Usage: pyinstall script.py"
+    exit 1
+fi
+
+# Check if input file exists and has .py extension
+if [ ! -f "$1" ]; then
+    echo "❌ Error: File '$1' not found"
+    exit 1
+elif [[ "$1" != *.py ]]; then
+    echo "❌ Error: File must have .py extension"
+    exit 1
+fi
+
+# Check and install PyInstaller if needed
+if ! command -v pyinstaller &> /dev/null; then
+        pip3 install pyinstaller &> /dev/null || {
+        echo "❌ Failed to install PyInstaller"
+        exit 1
+    }
+fi
+
+# Get absolute paths
+SCRIPT_DIR="$(cd "$(dirname "$1")" && pwd)"
+SCRIPT_NAME="$(basename "$1")"
+EXECUTABLE_NAME="${SCRIPT_NAME%.py}"
+
+# Create executable
+echo "🔨 Creating executable..."
+python3 -m PyInstaller --onefile "$1" &> /dev/null || {
+    echo "❌ Failed to create executable"
+    exit 1
+}
+
+# Copy executable and cleanup
+if [ -f "dist/$EXECUTABLE_NAME" ]; then
+    cp "dist/$EXECUTABLE_NAME" "$SCRIPT_DIR/$EXECUTABLE_NAME"
+    chmod +x "$SCRIPT_DIR/$EXECUTABLE_NAME"
+    rm -rf build dist *.spec
+    echo "✅ Created executable: $SCRIPT_DIR/$EXECUTABLE_NAME"
+else
+    echo "❌ Failed to create executable"
+    exit 1
+fi
