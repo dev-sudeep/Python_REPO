@@ -26,10 +26,14 @@ def commit_click():
     a.append(input("Enter the commit message: \n"))
     sub.run(a)
     print("Changes committed successfully")
+def push_click():
+    a = ["git", "push", repo]
+    sub.run(a)
+    print("Changes pushed successfully")
 # Create the main window
 root = tk.Tk()
 root.title("Git Client")
-root.geometry("600x800")
+root.geometry("400x800")
 
 # Create a button
 stage = tk.Button(root, text="Stage changes", command=stage_click)
@@ -43,5 +47,9 @@ stage.place(x=50, y=50)
 commit = tk.Button(root, text="Commit changes", command=commit_click)
 commit.config(width = 20, height=1)
 commit.place(x=50, y=100)
+
+push = tk.Button(root, text="Push changes", command=push_click)
+push.config(width = 20, height=1)
+push.place(x=50, y=150)
 # Start the event loop
 root.mainloop()
