@@ -16,11 +16,18 @@ def stage_click():
         a.append(input("Enter the file name to stage changes in: \n"))
     sub.run(a, cwd=cd)
     print("Changes staged successfully")
-
+def commit_click():
+    a = []
+    a.append("git")
+    a.append("commit")
+    a.append("-m")
+    a.append(input("Enter the commit message: \n"))
+    sub.run(a, cwd=cd)
+    print("Changes committed successfully")
 # Create the main window
 root = tk.Tk()
 root.title("Git Client")
-root.geometry("300x200")
+root.geometry("600x800")
 
 # Create a button
 stage = tk.Button(root, text="Stage changes", command=stage_click)
@@ -31,5 +38,8 @@ stage.config(width=20, height=1)
 # Position the button using absolute coordinates (x=50, y=50)
 stage.place(x=50, y=50)
 
+commit = tk.Button(root, text="Commit changes", command=commit_click)
+commit.config(width = 20, height=1)
+commit.place(x=50, y=100)
 # Start the event loop
 root.mainloop()
