@@ -7,6 +7,8 @@ TK_SILENCE_DEPRECATION=1
 repo = input("Enter the html url of the repository: \n")
 cd=input("Enter thelocal working directory: \n")
 
+os.chdir(cd)
+
 def stage_click():
     a = []
     a.append("git")
@@ -14,7 +16,7 @@ def stage_click():
     num=int(input("Enter the number of files you want to stage changes in: \n"))
     for i in range(0, num):
         a.append(input("Enter the file name to stage changes in: \n"))
-    sub.run(a, cwd=cd)
+    sub.run(a)
     print("Changes staged successfully")
 def commit_click():
     a = []
@@ -22,7 +24,7 @@ def commit_click():
     a.append("commit")
     a.append("-m")
     a.append(input("Enter the commit message: \n"))
-    sub.run(a, cwd=cd)
+    sub.run(a)
     print("Changes committed successfully")
 # Create the main window
 root = tk.Tk()
