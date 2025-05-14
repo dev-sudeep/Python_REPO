@@ -13,7 +13,7 @@ def script():
     elif choice == 'b':
         # Build into executable
         EName = input('Enter executable name: ')
-        installRes = os.system('pip install pyinstall > /dev/null 2>&1')
+        installRes = os.system('pip install pyinstaller > /dev/null 2>&1')
         if installRes != 0:
             print("Failed to install pyinstaller")
             os.system('killall IDLE')
